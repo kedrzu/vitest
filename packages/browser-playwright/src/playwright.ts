@@ -719,10 +719,7 @@ export class PlaywrightBrowserProvider implements BrowserProvider {
         // Find the frame through its element, as `iframe` does, not by its name: Playwright learns
         // a frame's name only from its navigation, which can lag behind the test already running in
         // it, and the previous file's removed iframe has the same name.
-        const element = await page.waitForSelector('iframe[data-vitest="true"]', {
-          state: 'attached',
-          timeout: 1000,
-        })
+        const element = await page.locator('iframe[data-vitest="true"]').elementHandle()
         const frame = await element.contentFrame()
         if (!frame) {
           throw new Error(
